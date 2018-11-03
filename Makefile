@@ -6,15 +6,16 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/03 19:21:12 by cvermand          #+#    #+#              #
-#    Updated: 2018/11/03 21:55:22 by cvermand         ###   ########.fr        #
+#    Updated: 2018/11/03 23:02:00 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 	= rtv1
 
 CC			=	gcc
-##FLAGS		=	-Wall -Werror -Wextra -g3
-FLAGS		= 
+FLAGS		=	-Wall -Werror -Wextra -g3
+#FLAGS		= 
+VERSION 	:=	-std=c11
 _SRC		=	main.c 
 ##init_env.c exit.c ratio.c sphere.c
 _HEADER		=	rtvone.h
@@ -52,25 +53,39 @@ $(NAME) : $(OBJECTS) $(HEADER)
 	-L$(LIB_DIR) -lft -L$(MLX_DIR) \
 	-lmlx -lm -D_REENTRANT -lpthread -o $(NAME)
 
+debug: CC := clang
+debug: DEBUG := -g3 -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined 
+debug: FLAGS :=
+debug: re
+
+valgrind: DEBUG := -ggdb3 
+valgrind: FLAGS :=
+valgrind: re
+
+noflags: FLAGS :=
+noflags: re
+
 $(OBJECTS) : | $(OBJ_DIR)
 
 $(LIBFT):
-	@make -C $(LIB_DIR)
+	@make -j 10 -C $(LIB_DIR)
 
 $(MLX):
-	@make -C $(MLX_DIR)
+	@make -j 10 -C $(MLX_DIR)
 
 $(OBJ_DIR):
 	@mkdir -p $@
 
 $(OBJECTS) : $(SRC) $(HEADER)
 	@printf  "\033[1:92mCompiling $(NAME)\033[0m %-31s\033[32m[$<]\033[0m\n" ""
-	@$(CC) $(CFLAGS) -c $< -o $@ -I includes/
+	@$(CC) $(VERSION) $(CFLAGS) -c $< -o $@ -I includes/
 	@printf "\033[A\033[2K"
 
-clean:
+purge: fclean
 	@make fclean -C $(LIB_DIR)
 	@make fclean -C $(MLX_DIR)
+
+clean:
 	@/bin/rm -rf $(OBJ_DIR)
 	@printf  "\033[1:32mCleaning object files -> \033[91m$(NAME)\033[0m\033[1:32m:\033[0m%-16s\033[32m[✔]\033[0m\n"
 
@@ -82,4 +97,4 @@ re:
 	@make fclean
 	@make
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug valgrind purge noflags

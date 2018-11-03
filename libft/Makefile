@@ -6,14 +6,14 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/08 08:28:21 by cvermand          #+#    #+#              #
-#    Updated: 2018/11/03 21:57:28 by cvermand         ###   ########.fr        #
+#    Updated: 2018/11/03 23:58:07 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-CC			=	gcc
-FLAGS		= 	-Wall -Werror -Wextra -g3
+CC			=	gcc 
+FLAGS		= 	-Wall -Werror -Wextra
 _SRC 		= 	ft_handler.c ft_parser.c ft_int_handler.c ft_printf.c \
 	  			ft_chainfct.c ft_error_handler.c ft_flags.c ft_recognize.c \
 	  			ft_precision.c ft_width.c ft_str_handler.c ft_str_w_handler.c \
@@ -41,14 +41,21 @@ _LSRC 		=	ft_putchar.c ft_putstr.c ft_memset.c ft_bzero.c ft_memcpy.c \
 				ft_get_fd.c ft_strtabdup.c ft_strtablen.c ft_min_int.c\
 				ft_check_arguments.c ft_to_degrees.c ft_to_radians.c\
 				ft_dim.c ft_min_of_3.c ft_max_of_3.c ft_rgb_to_hex.c
+_MSRC		=	ft_cam_to_world_x.c ft_cam_to_world_y.c ft_new_v3.c \
+				ft_new_v3_mem.c ft_new_v4.c ft_new_v4_mem.c \
+				ft_world_to_cam_x.c ft_world_to_cam_y.c
 
 PRINTF_DIR	= printf
 LIBFT_DIR	= basics
+MATH_DIR	= math
 SRC			= $(addprefix $(PRINTF_DIR)/, $(_SRC))
 LSRC		= $(addprefix $(LIBFT_DIR)/, $(_LSRC))
+MSRC		= $(addprefix $(MATH_DIR)/, $(_MSRC))
 BIN 		= $(SRC:.c=.o)
 LBIN		= $(LSRC:.c=.o)
+MBIN		= $(MSRC:.c=.o)
 BIN			+= $(LBIN)
+BIN			+= $(MBIN)
 RM			= /bin/rm
 
 all : $(NAME)
