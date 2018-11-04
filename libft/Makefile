@@ -6,7 +6,7 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/08 08:28:21 by cvermand          #+#    #+#              #
-#    Updated: 2018/11/03 23:58:07 by cvermand         ###   ########.fr        #
+#    Updated: 2018/11/04 18:44:16 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ NAME = libft.a
 CC			=	gcc 
 FLAGS		= 	-Wall -Werror -Wextra
 _SRC 		= 	ft_handler.c ft_parser.c ft_int_handler.c ft_printf.c \
-	  			ft_chainfct.c ft_error_handler.c ft_flags.c ft_recognize.c \
-	  			ft_precision.c ft_width.c ft_str_handler.c ft_str_w_handler.c \
+				ft_chainfct.c ft_error_handler.c ft_flags.c ft_recognize.c \
+				ft_precision.c ft_width.c ft_str_handler.c ft_str_w_handler.c \
 				ft_parser_flags.c ft_conversion_symbols.c ft_extend_w_char.c \
 				ft_w_char_bytes.c
 
@@ -41,22 +41,26 @@ _LSRC 		=	ft_putchar.c ft_putstr.c ft_memset.c ft_bzero.c ft_memcpy.c \
 				ft_get_fd.c ft_strtabdup.c ft_strtablen.c ft_min_int.c\
 				ft_check_arguments.c ft_to_degrees.c ft_to_radians.c\
 				ft_dim.c ft_min_of_3.c ft_max_of_3.c ft_rgb_to_hex.c
-_MSRC		=	ft_cam_to_world_x.c ft_cam_to_world_y.c ft_new_v3.c \
-				ft_new_v3_mem.c ft_new_v4.c ft_new_v4_mem.c \
-				ft_world_to_cam_x.c ft_world_to_cam_y.c
-
+_MSRC		=	ft_add.c ft_cam_to_world_y.c ft_dot.c ft_new_v3.c \
+				ft_new_v4.c ft_norm_v3.c ft_scalar.c\
+				ft_world_to_cam_x.c ft_cam_to_world_x.c ft_div.c\
+				ft_multi.c ft_new_v3_mem.c ft_new_v4_mem.c ft_norm_v4.c\
+				ft_substract.c ft_world_to_cam_y.c
+_HEADER		=	hprintf.h get_next_line.h libft.h mathft.h
+HEADER_DIR	= includes
 PRINTF_DIR	= printf
 LIBFT_DIR	= basics
 MATH_DIR	= math
 SRC			= $(addprefix $(PRINTF_DIR)/, $(_SRC))
 LSRC		= $(addprefix $(LIBFT_DIR)/, $(_LSRC))
 MSRC		= $(addprefix $(MATH_DIR)/, $(_MSRC))
+HEADER		= $(addprefix $(HEADER_DIR)/, $(_HEADER))
 BIN 		= $(SRC:.c=.o)
 LBIN		= $(LSRC:.c=.o)
 MBIN		= $(MSRC:.c=.o)
-BIN			+= $(LBIN)
-BIN			+= $(MBIN)
-RM			= /bin/rm
+	BIN			+= $(LBIN)
+	BIN			+= $(MBIN)
+	RM			= /bin/rm
 
 all : $(NAME)
 
@@ -65,10 +69,11 @@ $(NAME) : $(BIN)
 	@ranlib $(NAME)
 	@printf  "\033[92m\033[1:32mCompiling -------------> \033[91m$(NAME)\033[0m:\033[0m%-13s\033[32m[✔]\033[0m\n"
 
-%.o : %.c
-	@printf  "\033[1:92mCompiling $(NAME)\033[0m %-28s\033[32m[$<]\033[0m\n" ""
-	@$(CC) $(FLAGS) -c $< -o $@ -I includes/
-	@printf "\033[A\033[2K"
+%.o : %.c $(HEADER)
+	#@printf  "\033[1:92mCompiling $(NAME)\033[0m %-28s\033[32m[$<]\033[0m\n" ""
+	$(CC) $(FLAGS) -c $< -o $@ -I includes/
+	#$(CC) $(FLAGS) -c $< -o $@ -I $(HEADER)
+	#@printf "\033[A\033[2K"
 
 clean :
 	@rm -f $(BIN)

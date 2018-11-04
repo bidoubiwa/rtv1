@@ -6,7 +6,7 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/03 19:21:12 by cvermand          #+#    #+#              #
-#    Updated: 2018/11/03 23:02:00 by cvermand         ###   ########.fr        #
+#    Updated: 2018/11/04 22:53:39 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC			=	gcc
 FLAGS		=	-Wall -Werror -Wextra -g3
 #FLAGS		= 
 VERSION 	:=	-std=c11
-_SRC		=	main.c 
+_SRC		=	main.c ratio.c 
 ##init_env.c exit.c ratio.c sphere.c
 _HEADER		=	rtvone.h
 _LIBFT		=	libft.a
@@ -76,10 +76,11 @@ $(MLX):
 $(OBJ_DIR):
 	@mkdir -p $@
 
-$(OBJECTS) : $(SRC) $(HEADER)
+#DOESNT WORK
+$(OBJECTS)%.o : $(SRC) $(HEADER)
 	@printf  "\033[1:92mCompiling $(NAME)\033[0m %-31s\033[32m[$<]\033[0m\n" ""
-	@$(CC) $(VERSION) $(CFLAGS) -c $< -o $@ -I includes/
-	@printf "\033[A\033[2K"
+	$(CC) $(VERSION) $(CFLAGS) -c $< -o $@ -I includes/
+	#@printf "\033[A\033[2K"
 
 purge: fclean
 	@make fclean -C $(LIB_DIR)

@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 18:55:58 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/17 18:00:32 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/11/04 18:48:27 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include "mathft.h"
 # define ABS(Value) (Value < 0 ? -Value : Value)
 # define MAX_INT_POS 2147483647
 # define MAX_INT_NEG -2147483648
